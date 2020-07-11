@@ -6,8 +6,6 @@ from findURI import makePlaylist
 
 import os
 
-
-
 def create_api():
     CONSUMER_KEY = os.environ.get("CONSUMER_KEY")
     CONSUMER_SECRET = os.environ.get("CONSUMER_SECRET")
