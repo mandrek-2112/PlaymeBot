@@ -1,1 +1,1 @@
-worker: python3 replymentions.py
+worker: python replymentions.py
