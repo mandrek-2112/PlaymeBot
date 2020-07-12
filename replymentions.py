@@ -34,7 +34,7 @@ def check_mentions(api, since_id):
         req=tweet.text.lower()
 
         mentionPos=req.find("@playmebot")
-        artist=req[mentionPos+10:]
+        artist=req[mentionPos+11:]
         
         if len(artist)==0:
             st="Oops, we couldn't find the artist. Make sure you write the artist after the mention!"
