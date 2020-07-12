@@ -4,22 +4,22 @@ import random
 from datetime import datetime
 import os
 
-from spotipy.oauth2 import SpotifyClientCredentials # to access authorised Spotify data
+from spotipy.oauth2 import SpotifyOAuth # to access authorised Spotify data
 
 def makePlaylist(x, user):
 
 
 	Client_id = os.environ.get("SpotifyClient_id")
 	Client_secret = os.environ.get("SpotifyClient_secret")
+	Redirect_uri = "http://127.0.0.1:8888"
 
-	token = util.prompt_for_user_token(username="http://localhost:8888/callback", scope="playlist-modify-private, playlist-modify-public", client_id=Client_id,
-	 client_secret=Client_secret, redirect_uri ="http://localhost:8888/callback")
-	if token:
-		sp = spotipy.Spotify(auth = token) # spotify object to access API
-	else:
-		print("Can't get token.")
+	App_User = "f00z59vji8zqqy7pzp4h5qsx3"
+	Scope = "playlist-modify-private, playlist-modify-public"
 
-	#x = "halsey"
+	sp = spotipy.Spotify(auth_manager=SpotifyOAuth(username=App_User, scope=Scope, client_id=Client_id, client_secret=Client_secret, 
+		redirect_uri=Redirect_uri))
+
+	# x = "halsey"
 	artist_name = x;
 	 
 	if '+' in x:  # remove all the "+" characters, breaks the search
@@ -32,7 +32,6 @@ def makePlaylist(x, user):
 		uri = result0['artists']['items'][0]['uri']
 	except IndexError:
 		uri = 'No URI'
-		return "noartist"
 
 	# testing purposes
 	#print(uri)
@@ -77,7 +76,7 @@ def makePlaylist(x, user):
 
 
 	playlist = sp.user_playlist_create(user="f00z59vji8zqqy7pzp4h5qsx3", 
-		name="Featuring {}: PlayMeBot for {} ({})".format(artist_name.title(),user, datetime.now().date()), public=True, 
+		name="Featuring {}: PlayMeBot for {} ({})".format(artist_name.title(), user, datetime.now().date()), public=True, 
 		description='Auto suggested and created playlist by PlayMeBot.')
 	playlist_id = str(playlist['id'])
 
@@ -90,7 +89,7 @@ def makePlaylist(x, user):
 			break;
 
 	#print("Hopefully done.")
-#	print(playlist_id)
+	print(playlist_id)
 	return playlist_id
 
 #makePlaylist("kodaline","test")
