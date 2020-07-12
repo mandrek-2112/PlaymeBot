@@ -53,6 +53,8 @@ def check_mentions(api, since_id):
         api.update_status(status=st, in_reply_to_status_id=tweet.id, auto_populate_reply_metadata=True)
         with open('since_id.pk','wb') as f:
             pickle.dump(new_since_id, f)
+        sid="Since ID: "+str(new_since_id)
+        print(sid)
     return new_since_id
 
 def main():
